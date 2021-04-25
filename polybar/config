@@ -1,0 +1,267 @@
+;==========================================================
+;
+;
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/polybar/polybar
+;
+;   The README contains a lot of information
+;
+;==========================================================
+
+; 
+;  ██████╗ ██████╗ ██╗      ██████╗ ██████╗      ██████╗ ██████╗ ███╗   ██╗███████╗██╗ ██████╗ 
+; ██╔════╝██╔═══██╗██║     ██╔═══██╗██╔══██╗    ██╔════╝██╔═══██╗████╗  ██║██╔════╝██║██╔════╝ 
+; ██║     ██║   ██║██║     ██║   ██║██████╔╝    ██║     ██║   ██║██╔██╗ ██║█████╗  ██║██║  ███╗
+; ██║     ██║   ██║██║     ██║   ██║██╔══██╗    ██║     ██║   ██║██║╚██╗██║██╔══╝  ██║██║   ██║
+; ╚██████╗╚██████╔╝███████╗╚██████╔╝██║  ██║    ╚██████╗╚██████╔╝██║ ╚████║██║     ██║╚██████╔╝
+;  ╚═════╝ ╚═════╝ ╚══════╝ ╚═════╝ ╚═╝  ╚═╝     ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝     ╚═╝ ╚═════╝ 
+; ANSI_SHADOW                                                                                             
+
+[colors]
+background = #901c1212
+foreground = #901c1212
+shady-pink = #90fec6d3
+arch-color = #2097d3
+spotify-color=#1ed760
+alert = #bd2c40
+
+
+[bar/base]
+font-0=SF Mono:size=11:antialias=true;3
+font-1=FontAwesome5Free:style=Regular:size=9:antialias=true;3
+font-2=FontAwesome5Free:style=Solid:size=9:antialias=true;3
+font-3=IPAGothic:style=Regular:size=11:antialias=true;3
+font-4=font\-logos:size=10;2
+font-5=Weather Icons:pixelsize=12;2
+font-6=Font Awesome 5 Brands:pixelsize=12;2    
+
+monitor = DP1
+monitor-fallback = eDP1
+
+
+height = 30
+radius = 10
+background = ${colors.background}
+offset-y = 10
+override-redirect = true
+wm-restack = i3
+
+[bar/i3]
+inherit = bar/base
+width = 25%
+foreground = ${colors.foreground}
+offset-x = 10
+modules-left = arch i3 wsnumber xwindow
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+
+[bar/music]
+inherit = bar/base
+enable-ipc = true
+width = 20%
+foreground = ${colors.foreground}
+offset-x = 26%
+module-margin-left = 0
+padding-left = 0
+modules-left = spotify-prev spotify-play-pause spotify-next spotify
+
+[bar/tray]
+inherit = bar/base
+width = 53%
+
+padding-right = 2
+;offset-x = 84%
+offset-x = 46.5%
+;tray-position = right
+
+modules-right = openweather updates-pacman-aurhelper battery pulseaudio time power
+
+[module/wsnumber]
+type = custom/script
+exec = ~/.config/polybar/get_workspace
+tail = true
+interval = 0
+format = "<label>  "
+format-padding = 0
+format-foreground = ${colors.foreground}
+format-background = ${colors.shady-pink}
+scroll-up = i3 workspace next
+scroll-down = i3 workspace prev
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:50:...%
+label-foreground = ${colors.shady-pink} 
+label-background = ${colors.background} 
+label-padding = 2
+
+[module/arch]
+type = custom/text
+content = 
+content-foreground = ${colors.arch-color}
+;content-background = ${colors.shady-pink}
+content-font = 5
+content-padding = 3
+
+[module/spotify-logo]
+type = custom/text
+content = 
+content-foreground = ${colors.spotify-color}
+content-padding = 2
+
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+
+format-padding = 1
+format-background = ${colors.shady-pink}
+format-foreground = ${colors.background}
+index-sort = true
+wrapping-scroll = false
+
+enable-click = true
+reverse-scroll = false
+
+label-focused = 
+label-focused-font = 3
+label-focused-foreground = ${colors.background}
+label-focused-padding = 1
+
+label-unfocused = 
+label-unfocused-font = 2
+label-unfocused-padding = 1
+label-unfocused-foreground = ${colors.background}
+
+label-urgent = 
+label-urgent-font = 1
+label-urgent-padding = 1
+label-urgent-foreground = ${colors.background}
+
+;ws-icon-0 = 1;
+;ws-icon-1 = 2;
+;ws-icon-2 = 3;
+;ws-icon-9 = 10;
+;ws-icon-default = 
+
+[module/power]
+type = custom/text
+content = 
+content-foreground = ${colors.shady-pink}
+click-left = powermenu
+content-padding = 3
+
+[module/time]
+type = internal/date
+interval = 10
+format-margin = 2
+
+time = "%H:%M"
+date = "%d %b"
+
+label = %date%, %time%
+label-foreground = ${colors.shady-pink}
+label-background = ${colors.background}
+conent-padding = 3
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+format-volume-padding = 3
+format-volume = <ramp-volume> <label-volume>
+label-volume = %percentage:3:3%%
+format-volume-background = ${colors.background}
+format-volume-foreground = ${colors.shady-pink}
+use-ui-max = false
+interval = 5
+
+ramp-volume-0 = ""
+ramp-volume-1 = ""
+ramp-volume-2 = ""
+
+
+label-muted = "    "   
+label-muted-background = ${colors.background}
+label-muted-foreground = ${colors.foreground}
+label-muted-padding = 2
+
+
+[module/battery]
+type = custom/script
+interval = 1000
+label =   %output%%
+exec = cat /sys/class/power_supply/BAT1/capacity
+format-padding = 3
+format-foreground = ${colors.shady-pink}
+
+[module/updates-pacman-aurhelper]
+type = custom/script
+exec = ~/.config/scripts/updates-pacman-aurhelper.sh
+interval = 600
+format-padding = 3
+format-foreground = ${colors.alert}
+
+[module/spotify]
+type = custom/script
+tail = true
+; prefix symbol is shown before the text
+format-prefix = " "
+format = <label>
+exec = ~/.config/scripts/scroll_spotify_status.sh
+format-foreground = ${colors.spotify-color}
+format-padding = 2
+
+[module/spotify-prev]
+type = custom/script
+exec = echo " "
+format = <label>
+click-left = playerctl previous spotify
+format-background = ${colors.shady-pink}
+format-padding = 2
+
+[module/spotify-play-pause]
+type = custom/ipc
+hook-0 = echo " "
+hook-1 = echo " "
+initial = 1
+click-left = playerctl play-pause spotify
+format-background = ${colors.shady-pink}
+format-padding = 2
+
+[module/spotify-next]
+type = custom/script
+exec = echo " "
+format = <label>
+click-left = playerctl next spotify
+format-background = ${colors.shady-pink}
+format-padding = 2
+
+[module/openweather]                                                                                           
+type = custom/script
+exec = /home/mikael/.config/scripts/openweather.sh
+interval = 1000
+label-font = 6
+format-padding = 3
+format-foreground = ${colors.shady-pink}
+
+
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+;pseudo-transparency = true
+
+[global/wm]
+margin-top = 0
+margin-bottom = 0
