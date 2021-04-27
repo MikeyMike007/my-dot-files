@@ -49,6 +49,8 @@ autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownCli
 " let g:mdip_imgname = 'image'
 "
 let g:vim_markdown_folding_disabled = 1
+let g:table_mode_corner='|'
+
 
 
 
