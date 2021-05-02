@@ -122,6 +122,8 @@ content-padding = 2
 type = internal/i3
 format = <label-state> <label-mode>
 
+pin-workspaces = true
+
 format-padding = 1
 format-background = ${colors.shady-pink}
 format-foreground = ${colors.background}
