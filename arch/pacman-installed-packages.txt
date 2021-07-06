@@ -23,6 +23,7 @@ gawk 5.1.0-1
 gcc 10.2.0-6
 gettext 0.21-1
 git 2.31.1-1
+glow 1.4.1-1
 grep 3.6-1
 groff 1.22.4-5
 grub 2:2.04-10
@@ -53,6 +54,7 @@ nodejs 15.14.0-1
 npm 7.10.0-1
 pacman 5.2.2-2
 pacman-contrib 1.4.0-1
+pandoc 2.13-12
 papirus-icon-theme 20210401-1
 patch 2.7.6-8
 picom 8.2-1
@@ -73,6 +75,7 @@ rofi 1.6.1-1
 rsync 3.2.3-3
 sed 4.8-1
 shotgun 2.2.0-2
+snapd 2.51-1
 spotify 1:1.1.56.595-1
 sudo 1.9.6.p1-1
 terminator 2.1.1-2

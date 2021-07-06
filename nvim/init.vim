@@ -1,11 +1,13 @@
 :set number
-:set tabstop=4
+:set tabstop=2
+:set shiftwidth=2
 " :set relativenumber
 :set termguicolors
 :set cursorline
 :syntax on
 :syntax enable
-:set background=dark
+
+" :set background=dark
 :let mapleader = ','
 
 call plug#begin('~/.config/nvim/plugins')
@@ -27,20 +29,49 @@ Plug 'ferrine/md-img-paste.vim'
 Plug 'nikolvs/vim-sunbather'
 Plug 'wadackel/vim-dogrun'
 Plug 'dhruvasagar/vim-table-mode'
+Plug 'shaunsingh/nord.nvim'
+Plug 'ghifarit53/tokyonight-vim'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 call plug#end()
 
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
-let g:airline_theme='fruit_punch'
+"let g:airline_theme='fruit_punch'
+let g:airline_theme = "tokyonight"
 
 let g:rainbow_active=1
 
-colorscheme dogrun
+" Colorscheme settings
+let g:tokyonight_style = 'night' " available: night, storm
+let g:tokyonight_enable_italic = 1
+colorscheme tokyonight
 
-
-" lua require 'plug-colorizer'
-
+lua require 'plug-colorizer'
 lua require 'colorizer'.setup()
+
+" Vim GO
+"
+" disable all linters as that is taken care of by coc.nvim
+let g:go_diagnostics_enabled = 0
+let g:go_metalinter_enabled = []
+
+" don't jump to errors after metalinter is invoked
+let g:go_jump_to_error = 0
+
+" run go imports on file save
+let g:go_fmt_command = "goimports"
+
+" automatically highlight variable your cursor is on
+let g:go_auto_sameids = 0
+
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_generate_tags = 1
 
 
 autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
@@ -51,6 +82,12 @@ autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownCli
 
 
 " Coc
+
+" Coc GO
+autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
+
+" Coc Prettier
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 let g:vim_markdown_folding_disabled = 1
 
@@ -239,4 +276,17 @@ inoreabbrev <expr> __
           \ <SID>isAtStartOfLine('__') ?
           \ '<c-o>:silent! TableModeDisable<cr>' : '__'
 
+set textwidth=80
+set colorcolumn=+1
 
+" Get off my lawn
+nnoremap <Left> :echoe "Use h"<CR>
+nnoremap <Right> :echoe "Use l"<CR>
+nnoremap <Up> :echoe "Use k"<CR>
+nnoremap <Down> :echoe "Use j"<CR>
+
+" Quicker window movement
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
